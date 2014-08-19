@@ -6,13 +6,17 @@
 #include <iostream>
 #include <iomanip>
 
-int LifeSystem; //Shannon Life Counter
+struct System_of //Shannon : Struct Draft
+{
+	int Value;
+	COORD Location[3];
+};
+System_of Life; //Shannon : Life Struct
 double elapsedTime;
 double deltaTime;
 bool keyPressed[K_COUNT];
 COORD charLocation;
-COORD enemyLocation[3]; //Shannon Dummy Enemy Location
-COORD LifeLocation[3]; //Shannon Life Counter Location
+COORD enemyLocation[3]; //Shannon : Dummy Enemy Location
 COORD consoleSize;
 
 int diplayscore[10]={};
@@ -35,21 +39,19 @@ void init()
 	charLocation.X = consoleSize.X / 2;
 	charLocation.Y = consoleSize.Y / 2;
 
-	// Shannon Dummy Enemy at specific coordinates
+		// Shannon : Implement Dummy Enemy
 	for (int i = 0; i < 3; ++i)
 	{
 		enemyLocation[i].X = consoleSize.X - 2*(i+5);
 		enemyLocation[i].Y = consoleSize.Y - 2*(i+5);
 	}
 
-    elapsedTime = 0.0;
-
-	//Shannon Begin with 3 Lives
-	LifeSystem = 3;
+	//Shannon : Implement Life System
+	Life.Value = 3;
 	for (int i = 0; i < 3; ++i)
 	{
-		LifeLocation[i].X = consoleSize.X - 3*(i+1);
-		LifeLocation[i].Y = consoleSize.Y - 25;
+		Life.Location[i].X = consoleSize.X - 3*(i+1);
+		Life.Location[i].Y = consoleSize.Y - 25;
 	}
 
 	elapsedTime = 0.0;
@@ -105,7 +107,7 @@ void update(double dt)
 	{
 		if (charLocation.X == enemyLocation[i].X && charLocation.Y == enemyLocation[i].Y)
 		{
-			LifeSystem -= 1;
+			Life.Value -= 1;
 			enemyLocation[i].X = 0;
 			enemyLocation[i].Y = 0;
 		}
@@ -168,7 +170,7 @@ void render()
 	colour(0x0C);
 	std::cout << (char)1;
 
-	 // Shannon render enemy
+	 // Shannon : Render Enemy
 	for (int i = 0; i < 3; ++i)
 	{
 			gotoXY(enemyLocation[i]);
@@ -176,12 +178,12 @@ void render()
 			std::cout <<(char)1;
 	}
 
-	// Shannon render lifesystem
+	// Shannon : Render Life System
 	for (int i = 0; i < 3; ++i)
 	{
-		if (LifeSystem > i)
+		if (Life.Value > i)
 		{
-			gotoXY(LifeLocation[i]);
+			gotoXY(Life.Location[i]);
 			colour(0x0C);
 			std::cout <<(char)1;
 		}
