@@ -6,10 +6,13 @@
 #include <iostream>
 #include <iomanip>
 
+int LifeSystem; //Shannon Life Counter
 double elapsedTime;
 double deltaTime;
 bool keyPressed[K_COUNT];
 COORD charLocation;
+COORD enemyLocation[3]; //Shannon Dummy Enemy Location
+COORD LifeLocation[3]; //Shannon Life Counter Location
 COORD consoleSize;
 
 int diplayscore[10]={};
@@ -31,6 +34,23 @@ void init()
 	// set the character to be in the center of the screen.
 	charLocation.X = consoleSize.X / 2;
 	charLocation.Y = consoleSize.Y / 2;
+
+	// Shannon Dummy Enemy at specific coordinates
+	for (int i = 0; i < 3; ++i)
+	{
+		enemyLocation[i].X = consoleSize.X - 2*(i+5);
+		enemyLocation[i].Y = consoleSize.Y - 2*(i+5);
+	}
+
+    elapsedTime = 0.0;
+
+	//Shannon Begin with 3 Lives
+	LifeSystem = 3;
+	for (int i = 0; i < 3; ++i)
+	{
+		LifeLocation[i].X = consoleSize.X - 3*(i+1);
+		LifeLocation[i].Y = consoleSize.Y - 25;
+	}
 
 	elapsedTime = 0.0;
 }
@@ -78,6 +98,17 @@ void update(double dt)
 	{
 		Beep(1440, 30);
 		charLocation.X++; 
+	}
+
+	// Shannon Touching an enemy results in losing life and removal of enemy
+	for (int i = 0; i < 3; ++i)
+	{
+		if (charLocation.X == enemyLocation[i].X && charLocation.Y == enemyLocation[i].Y)
+		{
+			LifeSystem -= 1;
+			enemyLocation[i].X = 0;
+			enemyLocation[i].Y = 0;
+		}
 	}
 
 	// quits the game if player hits the escape key
@@ -131,10 +162,28 @@ void render()
 	    colour(0xF6);
 		std::cout <<score;
 	}
+
 	// render character
 	gotoXY(charLocation);
 	colour(0x0C);
 	std::cout << (char)1;
 
+	 // Shannon render enemy
+	for (int i = 0; i < 3; ++i)
+	{
+			gotoXY(enemyLocation[i]);
+			colour(0x1A);
+			std::cout <<(char)1;
+	}
 
+	// Shannon render lifesystem
+	for (int i = 0; i < 3; ++i)
+	{
+		if (LifeSystem > i)
+		{
+			gotoXY(LifeLocation[i]);
+			colour(0x0C);
+			std::cout <<(char)1;
+		}
+	}
 }
