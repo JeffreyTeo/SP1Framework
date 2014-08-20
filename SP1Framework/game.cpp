@@ -105,30 +105,30 @@ void update(double dt)
 void printBasket()
 {
 	gotoXY(charLocation.X, charLocation.Y-4);
-	colour(0x1A);
+	colour(0x0F);
 	std::cout << "  .=========." << endl;
 
 	gotoXY(charLocation.X, charLocation.Y-3);
-	colour(0x1A);
+	colour(0x0F);
 	std::cout << " l/        /l" << endl;
 
 	gotoXY(charLocation.X, charLocation.Y-2);
-	colour(0x1A);
+	colour(0x0F);
 	std::cout << " l========lX:" << endl;
 
 	gotoXY(charLocation.X, charLocation.Y-1);
-	colour(0x1A);
+	colour(0x0F);
 	std::cout << " lXXXXXXXXl/" << endl;
-	
+
 	gotoXY(charLocation);
-	colour(0x1A);
+	colour(0x0F);
 	std::cout << " ---------- ";
 }
 
 void render()
 {
 	// clear previous screen
-	colour(0x1A);
+	colour(0x000);
 	cls();
 
 	// render time taken to calculate this frame
@@ -139,29 +139,29 @@ void render()
 	gotoXY(0, 0);
 	colour(0x59);
 	std::cout << elapsedTime << "secs" << std::endl;
-	
+
 	if(score == 1000000000)
 	{
 		gotoXY(50, 20);
-	    colour(0xF6);
+		colour(0xF6);
 		std::cout << "Congrats!"<< "\nYou  won!";
 	}
 
 	else
 	{
 		gotoXY(62, 2);
-	    colour(0xF6);
-		std::cout << "High Score:\n";
+		colour(0xF6);
+		std::cout << "High Score:";
 		gotoXY(62, 3);
-	    colour(0xF6);
+		colour(0xF6);
 		std::cout <<score;
 	}
 
 	for (int y = 2; y <= 71; y++)
 	{
-	gotoXY(60,y);
-	colour(0x3A);
-	std::cout << 'x';
+		gotoXY(60,y);
+		colour(0x1A);
+		std::cout << 'x';
 	}
 
 	// render character
@@ -171,9 +171,9 @@ void render()
 	// Shannon : Render Enemy
 	for (int i = 0; i < 3; ++i)
 	{
-			gotoXY(60,67);
-			colour(0x1A);
-			std::cout <<(char)1;
+		gotoXY(60,67);
+		colour(0x1D);
+		std::cout <<(char)1;
 	}
 
 	// Shannon : Render Life System
@@ -185,5 +185,5 @@ void render()
 			colour(0x0C);
 			std::cout <<(char)1;
 		}
-}
+	}
 }
